@@ -1,10 +1,4 @@
 export * as window from './window';
-// export * from './misc';
+export * from './misc';
 
-export {
-    ViewColumn,
-    ExtensionContext,
-    StatusBarAlignment,
-    TextEditor,
-    TextDocument,
-} from 'vscode';
+export { ViewColumn, ExtensionContext, TextEditor, TextDocument } from 'vscode';

@@ -9,7 +9,8 @@ import {
     ViewColumn,
     OutputChannel,
 } from 'vscode';
-import { unimplementedWowo } from './helpers';
+import { unimplementedWowo, unusedWowo } from './helpers';
+import { OutputChannelImpl } from './impl/OutputChannelImpl';
 
 // #hack
 export const activeTextEditor = undefined;
@@ -76,5 +77,6 @@ export function createOutputChannel(
     name: string,
     languageId?: string,
 ): OutputChannel {
-    return unimplementedWowo(name, languageId);
+    unusedWowo({ languageId });
+    return new OutputChannelImpl(name);
 }

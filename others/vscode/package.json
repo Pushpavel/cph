@@ -4,10 +4,8 @@
   "description": "",
   "main": "./src/index.ts",
   "scripts": {
-    "dev": "./node_modules/nodemon/bin/nodemon.js -e ts  --exec \"npm run build\"",
     "build": "cp ./src/main.mjs ../../dist/main.mjs && tsc",
-    "watch": "cp ./src/main.mjs ../../dist/main.mjs && tsc --watch",
-    "p": "tsc-watch --onSuccess \"node ../../dist/main.mjs\""
+    "dev": "tsc-watch --onCompilationStarted \"cp ./src/main.mjs ../../dist/main.mjs\" --onSuccess \"node ../../dist/main.mjs\""
   },
   "author": "",
   "license": "ISC",
