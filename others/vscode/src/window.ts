@@ -11,6 +11,7 @@ import {
 } from 'vscode';
 import { unimplementedWowo, unusedWowo } from './helpers';
 import { OutputChannelImpl } from './impl/OutputChannelImpl';
+import { StatusBarItemImpl } from './impl/StatusBarItemImpl';
 
 // #hack
 export const activeTextEditor = undefined;
@@ -44,7 +45,9 @@ export function createStatusBarItem(
     alignment?: StatusBarAlignment,
     priority?: number,
 ): StatusBarItem {
-    return unimplementedWowo(alignment, priority);
+    const StatusBarItem = new StatusBarItemImpl(alignment);
+    StatusBarItem.priority = priority;
+    return StatusBarItem;
 }
 
 export const onDidChangeActiveTextEditor: Event<TextEditor | undefined> =
