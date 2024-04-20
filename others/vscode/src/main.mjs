@@ -1,3 +1,4 @@
 // @ts-ignore
 import ext from './extension.js';
-ext.activate();
+import * as vscode from 'vscode';
+ext.activate(vscode.context);

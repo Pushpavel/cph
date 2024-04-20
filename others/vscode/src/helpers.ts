@@ -5,5 +5,5 @@ export function unimplementedWowo<T>(...params: any[]) {
 }
 
 export function unusedWowo(...params: any[]) {
-    console.info('🌟 Unused wowo', params);
+    console.info('▪️ Unused wowo', params);
 }
