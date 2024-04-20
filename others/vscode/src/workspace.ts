@@ -4,8 +4,11 @@ import {
     ViewColumn,
     Event,
     Disposable,
+    WorkspaceConfiguration,
+    ConfigurationScope,
 } from 'vscode';
-import { unimplementedWowo } from './helpers';
+import { unimplementedWowo, unusedWowo } from './helpers';
+import { WorkspaceConfigurationImpl } from './impl/WorkspaceConfigurationImpl';
 
 export const workspaceFolders = [
     {
@@ -34,3 +37,11 @@ export const onDidCloseTextDocument: Event<TextDocument> = function <T>(
 ): Disposable {
     return unimplementedWowo(listener, thisArgs, disposables);
 };
+
+export function getConfiguration(
+    section?: string,
+    scope?: ConfigurationScope | null,
+): WorkspaceConfiguration {
+    unusedWowo(section, scope);
+    return new WorkspaceConfigurationImpl();
+}
