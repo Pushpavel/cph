@@ -15,6 +15,8 @@ export class WorkspaceConfigurationImpl implements WorkspaceConfiguration {
                 return '' as T;
             case 'general.defaultLanguageTemplateFileLocation':
                 return '' as T;
+            case 'general.autoShowJudge':
+                return true as T;
             default:
                 return unimplementedWowo(section, defaultValue);
         }

@@ -10,3 +10,11 @@ export function registerCommand(
     console.log(`🌟 COMMAND[${command}: registering`);
     return disposableWowo(`COMMAND[${command}]`);
 }
+
+export async function executeCommand(
+    command: string,
+    ...rest: any[]
+): Promise<void> {
+    console.log(`🌟 COMMAND(${command}) Executing with`, rest);
+    // this function originally had a return value
+}

@@ -5,6 +5,7 @@ export * as context from './context';
 export * as env from './env';
 export * from './misc';
 
+export { UriImpl as Uri } from './impl/UriImpl';
 export { EventEmitterImpl as EventEmitter } from './impl/EventEmitterImpl';
 
 export type { ExtensionContext, TextEditor } from 'vscode';
