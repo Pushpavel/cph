@@ -1,4 +1,4 @@
-import { Event, EventEmitter, Disposable } from 'vscode';
+import type { Event, EventEmitter, Disposable } from 'vscode';
 import { EventEmitter as NodeEventEmitter } from 'stream';
 
 export class EventEmitterImpl<T> implements EventEmitter<T> {

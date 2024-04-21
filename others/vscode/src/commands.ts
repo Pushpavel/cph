@@ -1,5 +1,5 @@
 import { disposableWowo, unusedWowo } from './helpers';
-import { Disposable } from 'vscode';
+import type { Disposable } from 'vscode';
 
 export function registerCommand(
     command: string,

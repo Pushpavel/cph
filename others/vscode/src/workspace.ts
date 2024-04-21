@@ -1,4 +1,4 @@
-import {
+import type {
     TextDocument,
     TextEditor,
     ViewColumn,
@@ -19,7 +19,7 @@ export const workspaceFolders = [
 ];
 
 export async function openTextDocument(fileName: string) {
-    return unimplementedWowo<TextDocument>(fileName);
+    console.log(`🌟 EDITOR(${fileName}) opening...`);
 }
 
 export async function showTextDocument(

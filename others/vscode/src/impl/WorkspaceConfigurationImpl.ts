@@ -1,4 +1,4 @@
-import { ConfigurationTarget, WorkspaceConfiguration } from 'vscode';
+import type { ConfigurationTarget, WorkspaceConfiguration } from 'vscode';
 import { unimplementedWowo } from '../helpers';
 
 export class WorkspaceConfigurationImpl implements WorkspaceConfiguration {
@@ -7,6 +7,14 @@ export class WorkspaceConfigurationImpl implements WorkspaceConfiguration {
         switch (section) {
             case 'general.retainWebviewContext':
                 return true as T;
+            case 'general.defaultLanguage':
+                return 'cpp' as T;
+            case 'general.useShortCodeForcesName':
+                return true as T;
+            case 'general.saveLocation':
+                return '' as T;
+            case 'general.defaultLanguageTemplateFileLocation':
+                return '' as T;
             default:
                 return unimplementedWowo(section, defaultValue);
         }

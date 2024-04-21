@@ -7,4 +7,4 @@ export * from './misc';
 
 export { EventEmitterImpl as EventEmitter } from './impl/EventEmitterImpl';
 
-export { ViewColumn, ExtensionContext, TextEditor, TextDocument } from 'vscode';
+export type { ExtensionContext, TextEditor } from 'vscode';

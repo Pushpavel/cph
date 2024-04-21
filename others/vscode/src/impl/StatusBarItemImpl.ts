@@ -1,11 +1,11 @@
-import {
+import type {
     AccessibilityInformation,
     Command,
     MarkdownString,
-    StatusBarAlignment,
     StatusBarItem,
     ThemeColor,
 } from 'vscode';
+import { StatusBarAlignment } from '../misc';
 import { unimplementedWowo } from '../helpers';
 
 export class StatusBarItemImpl implements StatusBarItem {

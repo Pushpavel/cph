@@ -1,4 +1,4 @@
-import { Disposable } from 'vscode';
+import type { Disposable } from 'vscode';
 
 export function unimplementedWowo<T>(...params: any[]) {
     console.info('🔥 Unimplemented wowo', params);

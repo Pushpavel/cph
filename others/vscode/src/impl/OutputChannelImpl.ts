@@ -1,4 +1,4 @@
-import { OutputChannel, ViewColumn } from 'vscode';
+import type { OutputChannel, ViewColumn } from 'vscode';
 import { EOL } from 'os';
 export class OutputChannelImpl implements OutputChannel {
     currentLine = '';
