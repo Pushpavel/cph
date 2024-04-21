@@ -5,7 +5,7 @@
         "outDir": "out",
         "lib": ["es2017", "DOM"],
         "jsx": "react",
-        "sourceMap": false,
+        "sourceMap": true,
         "rootDir": "src",
         "strict": true /* enable all strict type-checking options */,
         /* Additional Checks */
@@ -13,7 +13,7 @@
         // "noFallthroughCasesInSwitch": true, /* Report errors for fallthrough cases in switch statement. */
         "noUnusedParameters": true /* Report errors on unused parameters. */,
         "esModuleInterop": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
     },
     "exclude": ["node_modules", ".vscode-test", "out", "others"]
 }
