@@ -5,12 +5,13 @@
   "main": "./src/index.ts",
   "scripts": {
     "build": "cp ./src/main.mjs ../../dist/main.mjs && tsc",
-    "dev": "tsc-watch --onCompilationStarted \"cp ./src/main.mjs ../../dist/main.mjs\" --onSuccess \"node  --enable-source-maps ../../dist/main.mjs\""
+    "dev": "tsc-watch -noEmit --onCompilationStarted \"cp ./src/main.mjs ../../dist/main.mjs\" --onCompilationComplete \"esbuild ./src/index.ts --bundle --platform=node --target=node10.4 --outfile=../../dist/node_modules/vscode/index.js \" --onSuccess \"node  --enable-source-maps ../../dist/main.mjs\""
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/vscode": "^1.88.0",
+    "esbuild": "^0.20.2",
     "nodemon": "^3.1.0",
     "ts-node-dev": "^2.0.0",
     "tsc-watch": "^6.2.0",
