@@ -9,10 +9,11 @@ import type {
     ViewColumn,
     OutputChannel,
 } from 'vscode';
-import { disposableWowo, unimplementedWowo, unusedWowo } from './helpers';
+import { disposableWowo, unusedWowo } from './helpers';
 import { OutputChannelImpl } from './impl/OutputChannelImpl';
 import { StatusBarItemImpl } from './impl/StatusBarItemImpl';
 import { EventEmitterImpl } from './impl/EventEmitterImpl';
+import { TextEditorImpl } from './impl/TextEditorImpl';
 
 // #hack
 export const activeTextEditor = undefined;
@@ -75,12 +76,16 @@ export const onDidChangeActiveTextEditor: Event<TextEditor | undefined> =
 export const onDidChangeVisibleTextEditors: Event<readonly TextEditor[]> =
     _onDidChangeVisibleTextEditorsEmitter.event;
 
-export function showTextDocument(
+export async function showTextDocument(
     document: TextDocument,
     column?: ViewColumn,
     preserveFocus?: boolean,
-): Thenable<TextEditor> {
-    return unimplementedWowo(document, column, preserveFocus);
+): Promise<TextEditor> {
+    console.log(
+        `🌟 WINDOW: showing TEXT_EDITOR for document=${document.fileName} at column=${column} with`,
+        { preserveFocus },
+    );
+    return new TextEditorImpl();
 }
 
 export function createOutputChannel(
