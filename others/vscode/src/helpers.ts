@@ -1,3 +1,5 @@
+import { Disposable } from 'vscode';
+
 export function unimplementedWowo<T>(...params: any[]) {
     console.info('🔥 Unimplemented wowo', params);
     throw Error('🔥 Unimplemented wowo');
@@ -6,4 +8,12 @@ export function unimplementedWowo<T>(...params: any[]) {
 
 export function unusedWowo(...params: any[]) {
     console.info('▪️ Unused wowo', params);
+}
+
+export function disposableWowo(...params: any[]) {
+    return {
+        dispose() {
+            console.log(`💩 Disposing wowo unexpectedly`, params);
+        },
+    } as Disposable;
 }

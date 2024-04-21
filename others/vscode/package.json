@@ -5,7 +5,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "build": "cp ./src/main.mjs ../../dist/main.mjs && tsc",
-    "dev": "tsc-watch --onCompilationStarted \"cp ./src/main.mjs ../../dist/main.mjs\" --onSuccess \"node ../../dist/main.mjs\""
+    "dev": "tsc-watch --onCompilationStarted \"cp ./src/main.mjs ../../dist/main.mjs\" --onSuccess \"node  --enable-source-maps ../../dist/main.mjs\""
   },
   "author": "",
   "license": "ISC",

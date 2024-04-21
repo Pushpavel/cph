@@ -12,3 +12,4 @@ export enum StatusBarAlignment {
      */
     Right = 2,
 }
+export { default as EventEmitter } from 'events';

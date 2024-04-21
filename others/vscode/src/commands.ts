@@ -1,4 +1,4 @@
-import { unimplementedWowo, unusedWowo } from './helpers';
+import { disposableWowo, unusedWowo } from './helpers';
 import { Disposable } from 'vscode';
 
 export function registerCommand(
@@ -8,9 +8,5 @@ export function registerCommand(
 ): Disposable {
     unusedWowo(callback, thisArg);
     console.log(`🌟 COMMAND[${command}: registering`);
-    return {
-        dispose() {
-            unimplementedWowo();
-        },
-    };
+    return disposableWowo(`COMMAND[${command}]`);
 }

@@ -9,7 +9,7 @@ import {
     ViewColumn,
     OutputChannel,
 } from 'vscode';
-import { unimplementedWowo, unusedWowo } from './helpers';
+import { disposableWowo, unimplementedWowo, unusedWowo } from './helpers';
 import { OutputChannelImpl } from './impl/OutputChannelImpl';
 import { StatusBarItemImpl } from './impl/StatusBarItemImpl';
 
@@ -38,7 +38,15 @@ export function registerWebviewViewProvider(
         };
     },
 ): Disposable {
-    return unimplementedWowo<Disposable>(viewId, provider, options);
+    console.log(`🌟 WEBVIEW_VIEW_PROVIDER(${viewId}): registering with `, {
+        provider,
+        options,
+    });
+    return disposableWowo(`registeredWebviewViewProvider:`, {
+        viewId,
+        provider,
+        options,
+    });
 }
 
 export function createStatusBarItem(
