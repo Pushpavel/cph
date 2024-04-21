@@ -12,6 +12,7 @@ import {
 import { disposableWowo, unimplementedWowo, unusedWowo } from './helpers';
 import { OutputChannelImpl } from './impl/OutputChannelImpl';
 import { StatusBarItemImpl } from './impl/StatusBarItemImpl';
+import { EventEmitterImpl } from './impl/EventEmitterImpl';
 
 // #hack
 export const activeTextEditor = undefined;
@@ -58,23 +59,21 @@ export function createStatusBarItem(
     return StatusBarItem;
 }
 
+// #hack
+const _onDidChangeActiveTextEditorEmitter = new EventEmitterImpl<
+    TextEditor | undefined
+>();
+
+// #hack
+const _onDidChangeVisibleTextEditorsEmitter = new EventEmitterImpl<
+    readonly TextEditor[]
+>();
+
 export const onDidChangeActiveTextEditor: Event<TextEditor | undefined> =
-    function <T>(
-        listener: (e: T) => any,
-        thisArgs?: any,
-        disposables?: Disposable[],
-    ): Disposable {
-        return unimplementedWowo(listener, thisArgs, disposables);
-    };
+    _onDidChangeActiveTextEditorEmitter.event;
 
 export const onDidChangeVisibleTextEditors: Event<readonly TextEditor[]> =
-    function <T>(
-        listener: (e: T) => any,
-        thisArgs?: any,
-        disposables?: Disposable[],
-    ): Disposable {
-        return unimplementedWowo(listener, thisArgs, disposables);
-    };
+    _onDidChangeVisibleTextEditorsEmitter.event;
 
 export function showTextDocument(
     document: TextDocument,

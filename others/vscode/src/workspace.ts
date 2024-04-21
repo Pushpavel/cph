@@ -3,12 +3,12 @@ import {
     TextEditor,
     ViewColumn,
     Event,
-    Disposable,
     WorkspaceConfiguration,
     ConfigurationScope,
 } from 'vscode';
 import { unimplementedWowo, unusedWowo } from './helpers';
 import { WorkspaceConfigurationImpl } from './impl/WorkspaceConfigurationImpl';
+import { EventEmitterImpl } from './impl/EventEmitterImpl';
 
 export const workspaceFolders = [
     {
@@ -30,13 +30,11 @@ export async function showTextDocument(
     return unimplementedWowo<TextEditor>(document, column, preserveFocus);
 }
 
-export const onDidCloseTextDocument: Event<TextDocument> = function <T>(
-    listener: (e: T) => any,
-    thisArgs?: any,
-    disposables?: Disposable[],
-): Disposable {
-    return unimplementedWowo(listener, thisArgs, disposables);
-};
+// #hack
+const _onDidCloseTextDocumentEmitter = new EventEmitterImpl<TextDocument>();
+
+export const onDidCloseTextDocument: Event<TextDocument> =
+    _onDidCloseTextDocumentEmitter.event;
 
 export function getConfiguration(
     section?: string,

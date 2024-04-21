@@ -1,6 +1,5 @@
 import { Event, EventEmitter, Disposable } from 'vscode';
 import { EventEmitter as NodeEventEmitter } from 'stream';
-import { unimplementedWowo } from '../helpers';
 
 export class EventEmitterImpl<T> implements EventEmitter<T> {
     _events = new NodeEventEmitter();
