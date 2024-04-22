@@ -1,7 +1,8 @@
-import { unimplementedWowo } from '../helpers';
+import path from 'path';
 
 export class UriImpl {
-    static joinPath(base: UriImpl, ...pathSegments: string[]): UriImpl {
-        return unimplementedWowo(base, pathSegments);
+    // #hack base was of type vscode.Uri
+    static joinPath(base: string, ...pathSegments: string[]): UriImpl {
+        return path.join(base, ...pathSegments);
     }
 }

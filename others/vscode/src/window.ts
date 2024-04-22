@@ -1,6 +1,4 @@
 import type {
-    WebviewViewProvider,
-    Disposable,
     StatusBarAlignment,
     StatusBarItem,
     TextEditor,
@@ -9,46 +7,29 @@ import type {
     ViewColumn,
     OutputChannel,
 } from 'vscode';
-import { disposableWowo, unusedWowo } from './helpers';
+import { unusedWowo } from './helpers';
 import { OutputChannelImpl } from './impl/OutputChannelImpl';
 import { StatusBarItemImpl } from './impl/StatusBarItemImpl';
 import { EventEmitterImpl } from './impl/EventEmitterImpl';
 import { TextEditorImpl } from './impl/TextEditorImpl';
 
+export { registerWebviewViewProvider } from './api/webview';
+
 // #hack
 export const activeTextEditor = undefined;
 
 export function showErrorMessage(msg: string) {
-    console.error('vscode: ErrorMsg:', msg);
+    console.error('🌟 ERROR_MESSAGE:', msg);
 }
 
 export function showInfoMessage(msg: string) {
-    console.error('vscode: InfoMsg:', msg);
+    console.info('🌟 INFO_MESSAGE:', msg);
 }
 
 export async function showQuickPick(items: string[]) {
     // #hack
+    console.log('🌟 QUICK_PICK: showing', items, `Choosing ${items[0]}`);
     return items[0];
-}
-
-export function registerWebviewViewProvider(
-    viewId: string,
-    provider: WebviewViewProvider,
-    options?: {
-        readonly webviewOptions?: {
-            readonly retainContextWhenHidden?: boolean;
-        };
-    },
-): Disposable {
-    console.log(`🌟 WEBVIEW_VIEW_PROVIDER(${viewId}): registering with `, {
-        provider,
-        options,
-    });
-    return disposableWowo(`registeredWebviewViewProvider:`, {
-        viewId,
-        provider,
-        options,
-    });
 }
 
 export function createStatusBarItem(
