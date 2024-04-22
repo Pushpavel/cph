@@ -1,15 +1,15 @@
 function acquireVsCodeApi() {
+    const ws = new WebSocket(
+        window.location.href.replace('http', 'ws') + '/messages',
+        [],
+    );
+    const connected = new Promise<void>((r) => {
+        ws.onopen = () => r();
+    });
     return {
-        postMessage(message: any) {
-            console.log(message);
-            window.fetch(window.location.href + '/post-message-to-vscode', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(message),
-            });
+        async postMessage(message: any) {
+            await connected;
+            ws.send(JSON.stringify(message));
         },
     };
 }

@@ -1,4 +1,5 @@
-import { Application, static as static_files } from 'express';
+import { static as static_files } from 'express';
+import { Application } from 'express-ws';
 import { registeredWebviewViewProviders } from './register';
 import { WebviewViewImpl } from './impl/WebviewViewImpl';
 import { WebviewView } from 'vscode';
@@ -38,11 +39,10 @@ export function endpoints(app: Application) {
         res.send(webviewView.webview.html);
     });
 
-    app.post('/webview/:viewid/post-message-to-vscode', async (req, res) => {
+    app.ws('/webview/:viewid/messages', async (ws, req) => {
         const viewid = req.params['viewid'];
         const webview = webviewViews[viewid].webview as WebviewImpl;
-        console.log(`🌍->🌟`, req.body);
-        webview.onDidReceiveMessageEmitter.fire(req.body);
-        res.sendStatus(200);
+        console.log('🌍==⚡==🌟');
+        webview.connectWebSocket(ws);
     });
 }

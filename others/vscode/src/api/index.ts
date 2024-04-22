@@ -1,9 +1,11 @@
 import express from 'express';
+import use_websockets from 'express-ws';
+import type { Application } from 'express-ws';
 import { webEndpoints } from './webview';
 
 export async function serve() {
-    const app = express();
-
+    const app = express() as unknown as Application;
+    use_websockets(app);
     app.use(express.json());
 
     webEndpoints(app);
