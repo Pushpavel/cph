@@ -4,8 +4,8 @@
   "description": "",
   "main": "./src/index.ts",
   "scripts": {
-    "build": "cp ./src/main.mjs ../../dist/main.mjs && tsc",
-    "dev": "tsc-watch -noEmit --onCompilationStarted \"cp ./src/main.mjs ../../dist/main.mjs\" --onCompilationComplete \"esbuild ./src/index.ts --sourcemap=inline --bundle --platform=node --target=node10.4 --outfile=../../dist/node_modules/vscode/index.js \" --onSuccess \"node  --enable-source-maps ../../dist/main.mjs\""
+    "build": "cp ./src/main.mjs ../../dist/main.mjs && esbuild ./src/index.ts --sourcemap=inline --bundle --platform=node --outfile=../../dist/node_modules/vscode/index.js && esbuild ./src/api/webview/frontend/index.ts  --sourcemap=inline --bundle --platform=browser --outfile=../../dist/vscodefrontend.js",
+    "dev": "tsc-watch -noEmit --onCompilationComplete \"npm run build\" --onSuccess \"node  --enable-source-maps ../../dist/main.mjs\""
   },
   "author": "",
   "license": "ISC",

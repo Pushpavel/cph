@@ -5,7 +5,7 @@ import { EventEmitterImpl } from '../../../impl/EventEmitterImpl';
 export class WebviewImpl implements Webview {
     options: WebviewOptions = {};
     html: string = 'Not initialized';
-    private onDidReceiveMessageEmitter = new EventEmitterImpl<any>();
+    onDidReceiveMessageEmitter = new EventEmitterImpl<any>();
     get onDidReceiveMessage(): Event<any> {
         return this.onDidReceiveMessageEmitter.event;
     }

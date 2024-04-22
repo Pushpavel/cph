@@ -8,6 +8,7 @@ import { context } from '../..';
 
 export function endpoints(app: Application) {
     const webviewViews: Record<string, WebviewView> = {};
+
     app.use(
         context.extensionUri,
         static_files(path.join(__dirname, '..', '..', '..')),
@@ -28,7 +29,20 @@ export function endpoints(app: Application) {
                 {} as any, // #hack
                 {} as any, // #hack
             );
+            webviewView.webview.html = webviewView.webview.html.replace(
+                '<body>',
+                `<body><script src="/static/dist/vscodefrontend.js"></script>`,
+            );
+            webviewViews[viewid] = webviewView;
         }
         res.send(webviewView.webview.html);
+    });
+
+    app.post('/webview/:viewid/post-message-to-vscode', async (req, res) => {
+        const viewid = req.params['viewid'];
+        const webview = webviewViews[viewid].webview as WebviewImpl;
+        console.log(`🌍->🌟`, req.body);
+        webview.onDidReceiveMessageEmitter.fire(req.body);
+        res.sendStatus(200);
     });
 }
