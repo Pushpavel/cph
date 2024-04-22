@@ -9,6 +9,10 @@ function acquireVsCodeApi() {
     const connected = new Promise<void>((r) => {
         ws.onopen = () => r();
     });
+
+    ws.onmessage = (e) => {
+        window.postMessage(JSON.parse(e.data));
+    };
     return {
         async postMessage(message: any) {
             await connected;
