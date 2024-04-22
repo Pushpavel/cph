@@ -4,7 +4,6 @@ import { EventEmitterImpl } from '../../../impl/EventEmitterImpl';
 
 export class WebviewViewImpl implements WebviewView {
     private _visible: boolean = false;
-    onDidDisposeEmitter = new EventEmitterImpl<void>();
     onDidChangeVisibilityEmitter = new EventEmitterImpl<void>();
 
     title?: string;
@@ -25,7 +24,7 @@ export class WebviewViewImpl implements WebviewView {
     }
 
     get onDidDispose(): Event<void> {
-        return this.onDidDisposeEmitter.event;
+        return unimplementedWowo();
     }
     get onDidChangeVisibility(): Event<void> {
         return this.onDidChangeVisibilityEmitter.event;

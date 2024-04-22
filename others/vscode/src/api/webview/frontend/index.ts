@@ -1,6 +1,9 @@
 function acquireVsCodeApi() {
     const ws = new WebSocket(
-        window.location.href.replace('http', 'ws') + '/messages',
+        window.location.href.replace('http', 'ws') +
+            '/' +
+            (window as any).viewid +
+            '/messages',
         [],
     );
     const connected = new Promise<void>((r) => {
