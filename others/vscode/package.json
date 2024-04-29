@@ -4,7 +4,13 @@
   "description": "",
   "main": "./src/index.ts",
   "scripts": {
-    "build": "cp ./src/main.mjs ../../dist/main.mjs && esbuild ./src/index.ts --sourcemap=inline --bundle --platform=node --outfile=../../dist/node_modules/vscode/index.js && esbuild ./src/api/webview/frontend/index.ts  --sourcemap=inline --bundle --platform=browser --outfile=../../dist/vscodefrontend.js",
+    "build:cph": "cd ../.. && run-p webpack-frontend-production webpack-production && merge-dirs ./dist ./others/vscode/dist --overwrite",
+    "cp:main": "mkdir -p dist && cp ./src/main.cjs ./dist/main.cjs",
+    "build:vscode": "esbuild ./src/index.ts --sourcemap=inline --bundle --platform=node --outfile=./dist/node_modules/vscode/index.js",
+    "build:frontend": "esbuild ./src/api/webview/frontend/index.ts  --sourcemap=inline --bundle --platform=browser --outfile=./dist/vscodefrontend.js",
+    "compile": "esbuild ./dist/main.cjs --bundle --outfile=./dist/pkg.cjs --format=cjs --platform=node && pkg -t node18 -o ./dist/cph ./dist/pkg.cjs",
+    "build": "run-p build:cph build:dev && npm run compile",
+    "build:dev": "run-p cp:main build:vscode build:frontend",
     "dev": "tsc-watch -noEmit --onCompilationComplete \"npm run build\" --onSuccess \"node  --enable-source-maps ../../dist/main.mjs\""
   },
   "author": "",
@@ -15,7 +21,10 @@
     "@types/node": "^20.12.7",
     "@types/vscode": "^1.88.0",
     "esbuild": "^0.20.2",
+    "merge-dirs": "^0.2.1",
     "nodemon": "^3.1.0",
+    "npm-run-all": "^4.1.5",
+    "pkg": "^5.8.1",
     "ts-node-dev": "^2.0.0",
     "tsc-watch": "^6.2.0",
     "typescript": "^5.4.5"
