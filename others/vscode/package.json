@@ -11,7 +11,7 @@
     "compile": "esbuild ./dist/main.cjs --bundle --outfile=./dist/pkg.cjs --format=cjs --platform=node && pkg -t node18 -o ./dist/cph ./dist/pkg.cjs",
     "build": "run-p build:cph build:dev && npm run compile",
     "build:dev": "run-p cp:main build:vscode build:frontend",
-    "dev": "tsc-watch -noEmit --onCompilationComplete \"npm run build\" --onSuccess \"node  --enable-source-maps ../../dist/main.mjs\""
+    "dev": "tsc-watch -noEmit --onCompilationComplete \"npm run build:dev\" --onSuccess \"node  --enable-source-maps ./dist/main.cjs\""
   },
   "author": "",
   "license": "ISC",
