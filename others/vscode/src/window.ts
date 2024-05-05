@@ -48,7 +48,7 @@ const _onDidChangeVisibleTextEditorsEmitter = new EventEmitterImpl<
 >();
 
 export const onDidChangeActiveTextEditor =
-    ideClient.onDidChangeActiveTextEditor;
+    ideClient.onDidChangeActiveTextEditor();
 
 export const onDidChangeVisibleTextEditors: Event<readonly TextEditor[]> =
     _onDidChangeVisibleTextEditorsEmitter.event;

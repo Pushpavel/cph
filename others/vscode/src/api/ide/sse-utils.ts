@@ -1,8 +1,8 @@
 import { Observable, share } from 'rxjs';
 import { ObservableEventEmitter } from '../../impl/EventEmitterImpl';
-
+import EventSource from 'eventsource';
 export function sseJsonObservable<T>(
-    url: string | URL,
+    url: string,
     eventSourceInitDict?: EventSourceInit,
 ) {
     return new Observable<T>((observer) => {
@@ -16,7 +16,7 @@ export function sseJsonObservable<T>(
 }
 
 export function sharedSSEEventEmitter<T>(
-    url: string | URL,
+    url: string,
     eventSourceInitDict?: EventSourceInit,
     pipeBeforeShare: (obs: Observable<any>) => Observable<T> = (obs) => obs,
 ) {
