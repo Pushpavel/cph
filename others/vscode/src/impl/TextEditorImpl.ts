@@ -15,8 +15,9 @@ import type {
 import { unimplementedWowo } from '../helpers';
 
 export class TextEditorImpl implements TextEditor {
+    constructor(private _document: TextDocument) {}
     get document(): TextDocument {
-        return unimplementedWowo();
+        return this._document;
     }
     get selection(): Selection {
         return unimplementedWowo();

@@ -12,7 +12,7 @@ export function endpoints(app: Application) {
     const webviewViews: Record<string, WebviewView> = {};
 
     app.use(
-        context.extensionUri,
+        context.extensionUri.path,
         static_files(path.join(__dirname, '..', '..', '..')),
     );
 

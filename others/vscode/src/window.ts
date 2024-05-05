@@ -64,7 +64,7 @@ class WindowImpl {
             `🌟 WINDOW: showing TEXT_EDITOR for document=${document.fileName} at column=${column} with`,
             { preserveFocus },
         );
-        return new TextEditorImpl();
+        return new TextEditorImpl(document);
     }
 
     createOutputChannel(name: string, languageId?: string): OutputChannel {

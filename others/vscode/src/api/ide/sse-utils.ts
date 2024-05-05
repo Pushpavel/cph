@@ -8,7 +8,7 @@ export function sseJsonObservable<T>(
     return new Observable<T>((observer) => {
         const eventSource = new EventSource(url, eventSourceInitDict);
         eventSource.onmessage = (x) => observer.next(JSON.parse(x.data));
-        eventSource.onerror = (x) => observer.error(x);
+        // eventSource.onerror = (x) => observer.error(x);
         return () => {
             eventSource.close();
         };

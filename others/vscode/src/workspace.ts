@@ -1,15 +1,15 @@
 import type {
-    Uri,
     ViewColumn,
     Event,
     WorkspaceConfiguration,
     ConfigurationScope,
+    TextDocument,
 } from 'vscode';
 import { unimplementedWowo, unusedWowo } from './helpers';
 import { WorkspaceConfigurationImpl } from './impl/WorkspaceConfigurationImpl';
 import { EventEmitterImpl } from './impl/EventEmitterImpl';
-import { TextDocument } from 'vscode-languageserver-textdocument';
-import { readFile } from 'fs/promises';
+import { TextDocumentImpl } from './impl/TextDocumentImpl';
+// import { readFile } from 'fs/promises';
 
 export const workspaceFolders = [
     {
@@ -31,17 +31,9 @@ export async function openTextDocument(
         );
     }
 
-    const content = await readFile(fileName);
+    // const content = await readFile(fileName);
 
-    return {
-        ...TextDocument.create(fileName, '', 0, content.toString()),
-        get languageId(): string {
-            return unimplementedWowo();
-        },
-        get version(): number {
-            return unimplementedWowo();
-        },
-    };
+    return new TextDocumentImpl(fileName);
 }
 
 export async function showTextDocument(

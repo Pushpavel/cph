@@ -9,6 +9,6 @@ export async function serve() {
     app.use(express.json());
 
     webEndpoints(app);
-
+    console.log('🌟 Starting api server at port', 5677);
     return new Promise<void>((r) => app.listen(5677, 'localhost', r));
 }

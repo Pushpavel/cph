@@ -1,16 +1,20 @@
 import { TextEditor, Event } from 'vscode';
 import { sharedSSEEventEmitter as sharedJsonSSEEventEmitter } from './sse-utils';
-import { map } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { TextEditorImpl } from '../../impl/TextEditorImpl';
 import { unusedWowo } from '../../helpers';
+import { workspace } from '../..';
+// import { config } from 'rxjs';
 
+// config.onUnhandledError = (err: any) => console.error(err);
 const activeFileChangeEmitter = sharedJsonSSEEventEmitter<
     TextEditor | undefined
 >('http://localhost:5678/events/activeFile', undefined, (x) =>
     x.pipe(
-        map((activeFile) => {
+        switchMap(async (activeFile) => {
             unusedWowo(activeFile);
-            return new TextEditorImpl();
+            const textDocument = await workspace.openTextDocument(activeFile);
+            return new TextEditorImpl(textDocument);
         }),
     ),
 );
