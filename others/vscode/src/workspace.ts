@@ -1,13 +1,11 @@
 import type {
     ViewColumn,
-    Event,
     WorkspaceConfiguration,
     ConfigurationScope,
     TextDocument,
 } from 'vscode';
 import { unimplementedWowo, unusedWowo } from './helpers';
 import { WorkspaceConfigurationImpl } from './impl/WorkspaceConfigurationImpl';
-import { EventEmitterImpl } from './impl/EventEmitterImpl';
 import { TextDocumentImpl } from './impl/TextDocumentImpl';
 import { ideClient } from './api/ide';
 // import { readFile } from 'fs/promises';

@@ -43,7 +43,8 @@ export class TextDocumentImpl implements TextDocument {
         return unimplementedWowo();
     }
     async save() {
-        return unimplementedWowo<boolean>();
+        // #hack ignoring for now
+        return true;
     }
     get eol(): EndOfLine {
         return unimplementedWowo();

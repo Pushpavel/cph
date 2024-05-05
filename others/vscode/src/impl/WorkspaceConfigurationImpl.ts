@@ -10,13 +10,23 @@ export class WorkspaceConfigurationImpl implements WorkspaceConfiguration {
             case 'general.defaultLanguage':
                 return 'cpp' as T;
             case 'general.useShortCodeForcesName':
-                return true as T;
+                return false as T;
             case 'general.saveLocation':
                 return '' as T;
             case 'general.defaultLanguageTemplateFileLocation':
                 return '' as T;
             case 'general.autoShowJudge':
                 return true as T;
+            case 'language.cpp.Args':
+                return '' as T;
+            case 'language.cpp.Command':
+                return 'g++' as T;
+            case 'general.timeOut':
+                return 3000 as T;
+            case 'general.hideStderrorWhenCompiledOK':
+                return true as T;
+            case 'general.ignoreSTDERROR':
+                return false as T;
             default:
                 return unimplementedWowo(section, defaultValue);
         }
