@@ -12,6 +12,7 @@ import { OutputChannelImpl } from './impl/OutputChannelImpl';
 import { StatusBarItemImpl } from './impl/StatusBarItemImpl';
 import { EventEmitterImpl } from './impl/EventEmitterImpl';
 import { TextEditorImpl } from './impl/TextEditorImpl';
+import { ideClient } from './api/ide';
 
 export { registerWebviewViewProvider } from './api/webview';
 
@@ -42,17 +43,12 @@ export function createStatusBarItem(
 }
 
 // #hack
-const _onDidChangeActiveTextEditorEmitter = new EventEmitterImpl<
-    TextEditor | undefined
->();
-
-// #hack
 const _onDidChangeVisibleTextEditorsEmitter = new EventEmitterImpl<
     readonly TextEditor[]
 >();
 
-export const onDidChangeActiveTextEditor: Event<TextEditor | undefined> =
-    _onDidChangeActiveTextEditorEmitter.event;
+export const onDidChangeActiveTextEditor =
+    ideClient.onDidChangeActiveTextEditor;
 
 export const onDidChangeVisibleTextEditors: Event<readonly TextEditor[]> =
     _onDidChangeVisibleTextEditorsEmitter.event;

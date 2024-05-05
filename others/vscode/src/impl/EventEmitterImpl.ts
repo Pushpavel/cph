@@ -1,12 +1,11 @@
+import { Observable, Subject, Subscription } from 'rxjs';
 import type { Event, EventEmitter, Disposable } from 'vscode';
-import { EventEmitter as NodeEventEmitter } from 'stream';
+import { unimplementedWowo } from '../helpers';
 
-export class EventEmitterImpl<T> implements EventEmitter<T> {
-    _events = new NodeEventEmitter();
-    _eventName = 'something';
-
+export class ObservableEventEmitter<T> implements EventEmitter<T> {
+    private subs = new Subscription();
+    constructor(private observable: Observable<T>) {}
     get event(): Event<T> {
-        // #hack
         return (
             listener: (e: T) => any,
             thisArgs?: any,
@@ -14,14 +13,12 @@ export class EventEmitterImpl<T> implements EventEmitter<T> {
         ): Disposable => {
             if (thisArgs) listener = listener.bind(thisArgs);
 
-            const events = this._events;
-            const eventName = this._eventName;
-            events.on(this._eventName, listener);
-
+            const sub = this.observable.subscribe(listener);
+            this.subs.add(sub);
             // removes listener
             const disposable: Disposable = {
                 dispose() {
-                    events.off(eventName, listener);
+                    sub.unsubscribe();
                 },
             };
 
@@ -32,9 +29,24 @@ export class EventEmitterImpl<T> implements EventEmitter<T> {
         };
     }
     fire(data: T): void {
-        this._events.emit(this._eventName, data);
+        unimplementedWowo('Should not call fire in ObservableEventEmitter', {
+            data,
+        });
     }
     dispose(): void {
-        this._events.removeAllListeners(this._eventName);
+        this.subs.unsubscribe();
+    }
+}
+
+export class EventEmitterImpl<T> extends ObservableEventEmitter<T> {
+    constructor(private subject = new Subject<T>()) {
+        super(subject);
+    }
+    fire(data: T): void {
+        this.subject.next(data);
+    }
+    dispose(): void {
+        this.subject.complete();
+        super.dispose();
     }
 }
