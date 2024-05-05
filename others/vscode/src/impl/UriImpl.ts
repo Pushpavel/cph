@@ -20,7 +20,8 @@ export class UriImpl implements Uri {
         return unimplementedWowo();
     }
     get fsPath(): string {
-        return unimplementedWowo();
+        // #hack
+        return this.path;
     }
     with(change: {
         scheme?: string | undefined;

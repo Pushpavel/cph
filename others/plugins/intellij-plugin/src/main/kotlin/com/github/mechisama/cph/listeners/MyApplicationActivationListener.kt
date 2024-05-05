@@ -1,8 +1,10 @@
 package com.github.mechisama.cph.listeners
 
 import com.intellij.openapi.application.ApplicationActivationListener
+import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent
 import com.intellij.openapi.fileEditor.FileEditorManagerListener
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.wm.IdeFrame
 import io.javalin.Javalin
 import kotlinx.serialization.json.Json
@@ -14,22 +16,37 @@ internal class MyApplicationActivationListener : ApplicationActivationListener {
         if (done) return;
         done = true;
         Javalin.create(/*config*/)
-            .sse("/events/activeFile") { client ->
+            .sse("/events/onDidChangeActiveTextEditor") { client ->
                 client.keepAlive()
                 ideFrame.project!!.messageBus.connect().subscribe(
                     FileEditorManagerListener.FILE_EDITOR_MANAGER,
                     object : FileEditorManagerListener {
                         override fun selectionChanged(event: FileEditorManagerEvent) {
-                            println("activeFile: " + event.newFile.canonicalPath)
+                            println("activeFile: " + event.newFile.path)
                             client.sendEvent(
                                 Json.encodeToString(
-                                    event.newFile.canonicalPath
+                                    event.newFile.path
                                 )
                             )
                         }
                     }
                 )
-
+            }
+            .sse("/events/onDidCloseTextDocument") { client ->
+                client.keepAlive()
+                ideFrame.project!!.messageBus.connect().subscribe(
+                    FileEditorManagerListener.FILE_EDITOR_MANAGER,
+                    object : FileEditorManagerListener {
+                        override fun fileClosed(source: FileEditorManager, file: VirtualFile) {
+                            println("closedFile: " + file.path)
+                            client.sendEvent(
+                                Json.encodeToString(
+                                    file.path
+                                )
+                            )
+                        }
+                    }
+                )
             }
             .start(5678)
     }

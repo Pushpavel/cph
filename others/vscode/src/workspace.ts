@@ -9,6 +9,7 @@ import { unimplementedWowo, unusedWowo } from './helpers';
 import { WorkspaceConfigurationImpl } from './impl/WorkspaceConfigurationImpl';
 import { EventEmitterImpl } from './impl/EventEmitterImpl';
 import { TextDocumentImpl } from './impl/TextDocumentImpl';
+import { ideClient } from './api/ide';
 // import { readFile } from 'fs/promises';
 
 class WorkspaceImpl {
@@ -46,12 +47,9 @@ class WorkspaceImpl {
         );
     }
 
-    // #hack
-    private _onDidCloseTextDocumentEmitter =
-        new EventEmitterImpl<TextDocument>();
-
-    onDidCloseTextDocument: Event<TextDocument> =
-        this._onDidCloseTextDocumentEmitter.event;
+    get onDidCloseTextDocument() {
+        return ideClient.onDidCloseTextDocument();
+    }
 
     getConfiguration(
         section?: string,
