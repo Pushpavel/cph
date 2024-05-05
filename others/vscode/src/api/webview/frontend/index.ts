@@ -18,6 +18,17 @@ function acquireVsCodeApi() {
             await connected;
             ws.send(JSON.stringify(message));
         },
+        // #hack localStorage may not behave as expected, may depend on the IDE
+        getState() {
+            const state = localStorage.getItem('vscodestate');
+            if (state != null) return JSON.parse(state);
+        },
+        setState(state: any) {
+            if (state == null) {
+                localStorage.removeItem('vscodestate');
+            }
+            localStorage.setItem('vscodestate', JSON.stringify(state));
+        },
     };
 }
 window.acquireVsCodeApi = acquireVsCodeApi;
