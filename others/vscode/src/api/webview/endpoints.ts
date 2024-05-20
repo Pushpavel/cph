@@ -18,7 +18,23 @@ export function endpoints(app: Application) {
 
     app.get('/webview/:viewtype', async (req, res) => {
         const viewtype = req.params['viewtype'];
+        const theme = req.query['theme'];
         const viewid = randomUUID();
+
+        if (theme == null) {
+            res.send(
+                `You forgot to set 'theme' in /webview/${viewtype}?theme=dark, but its required to legibly viewing this webview`,
+            );
+            return;
+        }
+
+        if (theme != 'dark' && theme != 'light') {
+            res.send(
+                `'theme' can only be 'dark' or 'light', but theme='${theme}'`,
+            );
+            return;
+        }
+
         const webviewViewProvider = registeredWebviewViewProviders[viewtype];
         if (!webviewViewProvider) {
             return res.sendStatus(404);
@@ -29,13 +45,15 @@ export function endpoints(app: Application) {
             {} as any, // #hack
             {} as any, // #hack
         );
-        webviewView.webview.html = webviewView.webview.html.replace(
-            '<body>',
-            `<body>
+        webviewView.webview.html = webviewView.webview.html
+            .replace(
+                '<body>',
+                `<body>
                 <script>window.viewid = '${viewid}'</script>
                 <script src="/static/dist/vscodefrontend.js"></script>
             `,
-        );
+            )
+            .replace('<html>', `<html style="color-scheme: ${theme};">`);
         webviewViews[viewid] = webviewView;
         res.send(webviewView.webview.html);
     });
