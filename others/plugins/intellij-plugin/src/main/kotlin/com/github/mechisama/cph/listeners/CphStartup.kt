@@ -1,31 +1,43 @@
 package com.github.mechisama.cph.listeners
 
+import com.github.mechisama.cph.services.CphBackend
 import com.intellij.openapi.application.ApplicationActivationListener
+import com.intellij.openapi.components.service
+import com.intellij.openapi.diagnostic.logger
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent
 import com.intellij.openapi.fileEditor.FileEditorManagerListener
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.startup.ProjectActivity
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.wm.IdeFrame
 import io.javalin.Javalin
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 
-internal class MyApplicationActivationListener : ApplicationActivationListener {
+val LOG = logger<CphStartup>()
+
+class CphStartup : ProjectActivity {
     private var done = false;
-    override fun applicationActivated(ideFrame: IdeFrame) {
-        if (done) return;
-        done = true;
+    override suspend fun execute(project: Project) {
+        if (done) {
+            LOG.info("Cph started with multiple projects, seems like cph is already initialized")
+            return
+        }
+        done = true
+        LOG.debug("Cph starting the service")
+        val backend = service<CphBackend>()
         Javalin.create(/*config*/)
             .sse("/events/onDidChangeActiveTextEditor") { client ->
                 client.keepAlive()
-                ideFrame.project!!.messageBus.connect().subscribe(
+                project.messageBus.connect().subscribe(
                     FileEditorManagerListener.FILE_EDITOR_MANAGER,
                     object : FileEditorManagerListener {
                         override fun selectionChanged(event: FileEditorManagerEvent) {
-                            println("activeFile: " + event.newFile.path)
+                            println("activeFile: " + event.newFile?.path)
                             client.sendEvent(
                                 Json.encodeToString(
-                                    event.newFile.path
+                                    event.newFile?.path
                                 )
                             )
                         }
@@ -34,7 +46,7 @@ internal class MyApplicationActivationListener : ApplicationActivationListener {
             }
             .sse("/events/onDidCloseTextDocument") { client ->
                 client.keepAlive()
-                ideFrame.project!!.messageBus.connect().subscribe(
+                project.messageBus.connect().subscribe(
                     FileEditorManagerListener.FILE_EDITOR_MANAGER,
                     object : FileEditorManagerListener {
                         override fun fileClosed(source: FileEditorManager, file: VirtualFile) {
@@ -49,5 +61,8 @@ internal class MyApplicationActivationListener : ApplicationActivationListener {
                 )
             }
             .start(5678)
+
+        val backendURL = backend.getURL()
+        println(backendURL)
     }
 }

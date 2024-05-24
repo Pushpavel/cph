@@ -2,7 +2,6 @@ import { TextEditor, Event, TextDocument } from 'vscode';
 import { sharedSSEEventEmitter as sharedJsonSSEEventEmitter } from './sse-utils';
 import { switchMap } from 'rxjs';
 import { TextEditorImpl } from '../../impl/TextEditorImpl';
-import { unusedWowo } from '../../helpers';
 import workspace from '../../workspace';
 // import { config } from 'rxjs';
 

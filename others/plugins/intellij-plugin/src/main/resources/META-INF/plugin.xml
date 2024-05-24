@@ -10,9 +10,11 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="com.github.mechisama.cph.toolWindow.JudgeViewFactory" id="Results"/>
+        <postStartupActivity implementation="com.github.mechisama.cph.listeners.CphStartup"/>
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.mechisama.cph.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
+    <actions>
+        <action id="com.github.mechisama.cph.actions.DownloadFileAction"
+                class="com.github.mechisama.cph.actions.DownloadFileAction" text="Download File for fun"/>
+    </actions>
 </idea-plugin>

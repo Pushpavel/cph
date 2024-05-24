@@ -8,7 +8,9 @@ export async function serve() {
     use_websockets(app);
     app.use(express.json());
 
+    app.get('/ping', (_, res) => res.status(200).send('pong'));
+
     webEndpoints(app);
-    console.log('🌟 Starting api server at port', 5677);
-    return new Promise<void>((r) => app.listen(5677, 'localhost', r));
+    console.log('🌟 Starting api server at port', 8888);
+    return new Promise<void>((r) => app.listen(8888, '127.0.0.1', r));
 }
