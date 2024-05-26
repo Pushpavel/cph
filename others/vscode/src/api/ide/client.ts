@@ -11,6 +11,7 @@ const onDidChangeActiveTextEditorEmitter = sharedJsonSSEEventEmitter<
 >('http://localhost:5678/events/onDidChangeActiveTextEditor', undefined, (x) =>
     x.pipe(
         switchMap(async (activeFile) => {
+            if (activeFile == null) return undefined;
             const textDocument = await workspace.openTextDocument(activeFile);
             return new TextEditorImpl(textDocument);
         }),
@@ -29,6 +30,10 @@ const onDidCloseTextDocumentEmitter = sharedJsonSSEEventEmitter<TextDocument>(
 );
 
 export function onDidChangeActiveTextEditor(): Event<TextEditor | undefined> {
+    console.log('registering ... 21e23e 242342 4234');
+    onDidChangeActiveTextEditorEmitter.event((e) =>
+        console.log('$$$$$$$$$$$$$$$$', e),
+    );
     return onDidChangeActiveTextEditorEmitter.event;
 }
 

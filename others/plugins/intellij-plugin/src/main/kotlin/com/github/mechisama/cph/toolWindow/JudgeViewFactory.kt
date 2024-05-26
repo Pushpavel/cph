@@ -37,7 +37,7 @@ class JudgeViewFactory : ToolWindowFactory, DumbAware {
         GlobalScope.launch {
             val backend = service<CphBackend>()
             val url = backend.getURL()
-            browser.loadURL(url + "/webview/cph.judgeView?theme=dark")
+            browser.loadURL("$url/webview/cph.judgeView?theme=dark")
         }
 
     }

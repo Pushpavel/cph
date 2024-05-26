@@ -34,7 +34,7 @@ class CphStartup : ProjectActivity {
                     FileEditorManagerListener.FILE_EDITOR_MANAGER,
                     object : FileEditorManagerListener {
                         override fun selectionChanged(event: FileEditorManagerEvent) {
-                            println("activeFile: " + event.newFile?.path)
+                            LOG.info("activeFile: " + event.newFile?.path)
                             client.sendEvent(
                                 Json.encodeToString(
                                     event.newFile?.path
